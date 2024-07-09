@@ -189,7 +189,7 @@ const DetailsTab: React.FC<DetailsTabProps> = ({ location, onClose }) => {
         <div className="bg-brown-50 p-6 rounded-lg shadow">
           <h3 className="text-2xl font-semibold mb-4 text-brown-800">Faction Influence</h3>
           <ul className="divide-y divide-brown-300">
-            {Object.entries(location.factions).map(([faction, influence]) => (
+            {Object.entries(location.faction).map(([faction, influence]) => (
               <li key={faction} className="flex justify-between items-center py-2">
                 <span className="text-lg">{faction}:</span>
                 <span className="text-lg font-semibold">{influence}%</span>
