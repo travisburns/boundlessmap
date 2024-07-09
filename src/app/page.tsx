@@ -24,6 +24,7 @@ interface RegionData {
     name: string;
     description: string;
     image: string;
+    overview: string;
     stats: {
       population: number;
       magic: number;
