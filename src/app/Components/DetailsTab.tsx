@@ -232,7 +232,7 @@ const DetailsTab: React.FC<DetailsTabProps> = ({ location, onClose }) => {
       }}
     >
       <div className="flex justify-between items-center mb-6 border-b-2 border-brown-600 pb-4">
-        <h2 className="text-3xl font-bold text-brown-800">{location.name}</h2>
+        <h2 className="text-3xl font-bold text-brown-800">{location.Name}</h2>
         <button onClick={onClose} className="text-brown-600 hover:text-brown-800">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
