@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Location } from '../../types/types';
+
 import DonutChart from './DonutChart';
 import ClassesChart from './ClassesChart';
 
