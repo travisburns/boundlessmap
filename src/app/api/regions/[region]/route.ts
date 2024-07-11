@@ -10,9 +10,17 @@ export async function GET(request: Request, { params }: { params: { region: stri
   try {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const data = JSON.parse(fileContents);
-    return NextResponse.json(data);
+
+    // Add CORS headers to the response
+    const headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    };
+
+    return new NextResponse(JSON.stringify(data), { headers });
   } catch (error) {
     console.error('Error loading region data:', error);
-    return NextResponse.json({ message: 'Region not found' }, { status: 404 });
+    return new NextResponse(JSON.stringify({ message: 'Region not found' }), { status: 404 });
   }
 }
