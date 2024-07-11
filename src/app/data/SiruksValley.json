@@ -1,5 +1,6 @@
 {
-    "mapImage": "/assets/siruksvalleymap.png",
+  "regionName": "siruksvalley",  
+  "mapImage": "/assets/siruksvalleymap.png",
     "audio": "/audio/siruksvalley.mp3",
     "adjacentRegions": {
       "north": "infusedSea",
