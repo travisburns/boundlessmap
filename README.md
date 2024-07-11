@@ -4,7 +4,9 @@
 
 I'm excited to present the improved version of InteractiveMap, an ambitious web application that I've rebuilt using Next.js, React, TypeScript, and Tailwind CSS. This new version takes the immersive and engaging experience of exploring a fantasy world to a whole new level, with enhanced functionality, performance, and user experience.
 
--Live Site Link (https://boundlessmap.vercel.app/)
+old Application repo: (https://github.com/travisburns/interactiveMap)
+
+-Live Site New Application Link (https://boundlessmap.vercel.app/)
 
 As with the previous JavaScript-based version, my primary objective remains the same: to develop a visually appealing and interactive map interface that encourages users to discover and learn about various locations within the fantasy setting. The singular map represents a small section of an entire fantasy world that I created using Wonderdraft for individual region maps and Photoshop to combine the regions into one massive world.
 
