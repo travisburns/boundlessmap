@@ -184,18 +184,31 @@ export default function Home({ params }: { params: { region?: string } }) {
       <p className="text-xl mb-6 text-center text-gray-300">{nextRegion.regionOverview.overview}</p>
       
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-        {Object.entries(nextRegion.regionOverview).map(([key, value]) => {
-          if (key !== 'name' && key !== 'overview' && key !== 'image' && key !== 'stats') {
-            return (
-              <div key={key} className="bg-gray-800 bg-opacity-80 p-4 rounded-lg shadow-md">
-                <h3 className="text-lg font-semibold text-white mb-2 capitalize">{key}</h3>
-                <p className="text-sm text-gray-300">{value}</p>
-              </div>
-            );
-          }
-          return null;
-        })}
-      </div>
+  {Object.entries(nextRegion.regionOverview).map(([key, value]) => {
+    if (key !== 'name' && key !== 'overview' && key !== 'image' && key !== 'stats') {
+      if (typeof value === 'string') {
+        return (
+          <div key={key} className="bg-gray-800 bg-opacity-80 p-4 rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold text-white mb-2 capitalize">{key}</h3>
+            <p className="text-sm text-gray-300">{value}</p>
+          </div>
+        );
+      } else if (typeof value === 'object') {
+        return (
+          <div key={key} className="bg-gray-800 bg-opacity-80 p-4 rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold text-white mb-2 capitalize">{key}</h3>
+            {Object.entries(value).map(([subKey, subValue]) => (
+              <p key={subKey} className="text-sm text-gray-300">
+                <span className="font-semibold capitalize">{subKey}:</span> {subValue}
+              </p>
+            ))}
+          </div>
+        );
+      }
+    }
+    return null;
+  })}
+</div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">
         {Object.entries(nextRegion.regionOverview.stats).map(([key, value]) => (
