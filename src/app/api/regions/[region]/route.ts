@@ -1,16 +1,11 @@
-// src/app/api/regions/[region]/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { region: string } }
-) {
+export async function GET(request: Request, { params }: { params: { region: string } }) {
   const { region } = params;
   const dataDirectory = path.join(process.cwd(), 'src', 'app', 'data');
-  const regionName = region || 'SiruksValley';
-  const filePath = path.join(dataDirectory, `${regionName}.json`);
+  const filePath = path.join(dataDirectory, `${region}.json`);
 
   try {
     const fileContents = fs.readFileSync(filePath, 'utf8');

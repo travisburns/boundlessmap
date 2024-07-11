@@ -1,8 +1,11 @@
-'use client';
-import { useParams } from 'next/navigation';
 import Home from '../../page';
 
-export default function RegionPage() {
-  const params = useParams();
-  return <Home params={{ region: params.region as string }} />;
+interface RegionPageProps {
+  params: {
+    region: string;
+  };
+}
+
+export default function RegionPage({ params }: RegionPageProps) {
+  return <Home params={params} />;
 }
