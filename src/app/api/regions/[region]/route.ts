@@ -1,17 +1,18 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import siruksvalleyData from '../../../data/siruksvalley.json';
 
 export async function GET(request: Request, { params }: { params: { region: string } }) {
   const { region } = params;
-  const dataDirectory = path.join(process.cwd(), 'src', 'app', 'data');
-  const filePath = path.join(dataDirectory, `${region}.json`);
-
+  
   try {
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(fileContents);
+    // Use the imported data instead of reading from file
+    const data = region === 'siruksvalley' ? siruksvalleyData : null;
+    
+    if (!data) {
+      throw new Error('Region not found');
+    }
 
-    const response = new NextResponse(JSON.stringify(data), {
+    return new NextResponse(JSON.stringify(data), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
@@ -20,8 +21,6 @@ export async function GET(request: Request, { params }: { params: { region: stri
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
     });
-
-    return response;
   } catch (error) {
     console.error('Error loading region data:', error);
     return new NextResponse(JSON.stringify({ message: 'Region not found' }), {
@@ -34,17 +33,4 @@ export async function GET(request: Request, { params }: { params: { region: stri
       },
     });
   }
-}
-
-export async function OPTIONS(request: Request) {
-  const response = new NextResponse(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
-  });
-
-  return response;
 }
