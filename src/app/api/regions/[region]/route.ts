@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-export async function GET(request: Request, { params }: { params: { region: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { region: string } }) {
   const { region } = params;
   const dataDirectory = path.join(process.cwd(), 'src', 'app', 'data');
   const filePath = path.join(dataDirectory, `${region}.json`);
@@ -11,11 +11,11 @@ export async function GET(request: Request, { params }: { params: { region: stri
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const data = JSON.parse(fileContents);
 
-    const headers = {
+    const headers = new Headers({
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    };
+    });
 
     if (request.method === 'OPTIONS') {
       return new NextResponse(null, {
