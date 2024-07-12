@@ -1,40 +1,50 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import cors from 'cors';
 
-// Create a new instance of the cors middleware
-const corsMiddleware = cors({
-  origin: '*',
-  methods: ['GET', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-});
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await new Promise((resolve, reject) => {
-    corsMiddleware(req, res, (result: unknown) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-
-  const { region } = req.query;
-
-  if (typeof region !== 'string') {
-    return res.status(400).json({ message: 'Invalid region parameter' });
-  }
-
+export async function GET(request: Request, { params }: { params: { region: string } }) {
+  const { region } = params;
   const dataDirectory = path.join(process.cwd(), 'src', 'app', 'data');
   const filePath = path.join(dataDirectory, `${region}.json`);
 
   try {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const data = JSON.parse(fileContents);
-    res.status(200).json(data);
+
+    const response = new NextResponse(JSON.stringify(data), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    });
+
+    return response;
   } catch (error) {
     console.error('Error loading region data:', error);
-    res.status(404).json({ message: 'Region not found' });
+    return new NextResponse(JSON.stringify({ message: 'Region not found' }), {
+      status: 404,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    });
   }
+}
+
+export async function OPTIONS(request: Request) {
+  const response = new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
+
+  return response;
 }
