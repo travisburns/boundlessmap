@@ -11,12 +11,18 @@ export async function GET(request: Request, { params }: { params: { region: stri
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const data = JSON.parse(fileContents);
 
-    // Add CORS headers to the response
     const headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     };
+
+    if (request.method === 'OPTIONS') {
+      return new NextResponse(null, {
+        status: 200,
+        headers: headers,
+      });
+    }
 
     return new NextResponse(JSON.stringify(data), { headers });
   } catch (error) {
